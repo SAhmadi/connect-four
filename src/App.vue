@@ -23,34 +23,48 @@
 
       <v-spacer></v-spacer>
 
-      <v-btn
+      <!-- <v-btn
         href="https://github.com/vuetifyjs/vuetify/releases/latest"
         target="_blank"
         text
       >
         <span class="mr-2">Latest Release</span>
         <v-icon>mdi-open-in-new</v-icon>
-      </v-btn>
+      </v-btn> -->
+      <div>
+        Turn: Player {{  currentPlayer }}
+      </div>
     </v-app-bar>
 
-    <v-main>
-      <HelloWorld />
+    <v-main class="main">
+      <Board />
     </v-main>
   </v-app>
 </template>
 
 <script>
-import HelloWorld from "./components/HelloWorld";
+import Board from "./components/Board.vue";
 
 export default {
   name: "App",
 
   components: {
-    HelloWorld
+    Board
   },
 
-  data: () => ({
-    //
-  })
+  data: () => ({}),
+
+  computed: {
+    currentPlayer() {
+      return this.$store.state.currentPlayer;
+    }
+  }
 };
 </script>
+
+<style lang="scss" scoped>
+.main {
+  padding: 0;
+  margin: 0;
+}
+</style>
