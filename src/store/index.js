@@ -38,7 +38,7 @@ export default new Vuex.Store({
       }
 
       state.board = board;
-      console.log(`${state.board} mutated`);
+      console.log(`${state.board}`);
     },
 
     mutateCurrentPlayer(state) {
@@ -53,9 +53,13 @@ export default new Vuex.Store({
     updateBoard: function({ commit }, payload) {
       commit("mutateBoard", payload);
     },
+    updateResetBoard: function({ commit }) {
+      commit("mutateResetBoard");
+    },
     updateCurrentPlayer: function({ commit }) {
       commit("mutateCurrentPlayer");
     },
   },
+
   modules: {},
 });

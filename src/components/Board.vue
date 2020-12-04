@@ -30,6 +30,38 @@
         </v-btn>
       </span>
     </div>
+
+    <v-dialog
+      v-model="isGameWon"
+      persistent
+      max-width="400"
+    >
+      <v-card>
+        <v-card-title class="headline">
+          🏆 Player {{ gameWinData.winner }} has won the game!
+        </v-card-title>
+        <v-card-text>
+          Do you want to restart the game!
+        </v-card-text>
+        <v-card-actions>
+          <v-spacer></v-spacer>
+          <v-btn
+            color="primary darken-1"
+            text
+            @click="isGameWon = false"
+          >
+            Disagree
+          </v-btn>
+          <v-btn
+            color="primary darken-1"
+            text
+            @click="resetGame"
+          >
+            Agree
+          </v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
   </v-container>
 </template>
 
@@ -37,7 +69,10 @@
 export default {
   name: "Board",
 
-  data: () => ({}),
+  data: () => ({
+    isGameWon: false,
+    gameWinData: {},
+  }),
 
   computed: {
     board() {
@@ -102,7 +137,6 @@ export default {
           count = 0;
         } else {
           count++;
-          // console.log(`board[${row}][${i}]: ${board[row][i]} == player: ${player}; count: ${count}`);
         }
       }
 
@@ -144,11 +178,9 @@ export default {
     
       // Move up to highest diagonal point of current cell
       while (tempRow - 1 >= 0 && tempCol - 1 >= 0) {
-        console.log(`${tempRow}; ${tempCol}`);  
         tempRow--;
         tempCol--;
       }
-      console.log(`Before ${tempRow}; ${tempCol}`)
 
       // Move down to lowest diagonal point and count
       while (tempRow + 1 < board.length && tempCol + 1 < board[0].length) {
@@ -160,9 +192,7 @@ export default {
         }
         tempRow++;
         tempCol++;
-        console.log(`${tempRow}; ${tempCol} = Count ${count}`)
       }
-      console.log(`After ${tempRow}; ${tempCol}`)
 
       if (count >= 4) {
         this.gameWon(player, "Diagonal");
@@ -170,12 +200,16 @@ export default {
     },
 
     gameWon(player, message = '') {
-      console.log(`Player ${player} won! ${message}`);
+      this.isGameWon = true;
+      this.gameWinData = {
+        winner: player,
+        message: message,
+      };
     },
 
-    getBoardValue(row, col) {
-      console.log(this.$store.state.board[row][col]);
-    },
+    resetGame() {
+
+    }
   },
 };
 </script>
